@@ -31,6 +31,7 @@
     <p class="email"><a href="mailto:gi.baldassarre@gmail.com">📧 gi.baldassarre@gmail.com</a></p>
     
     <a href="cv.pdf" class="cv-btn" target="_blank">CV</a>
+    
     <!-- Map & Quote Container -->
     <div class="map-quote-container">
         <!-- Journey Title -->
@@ -217,16 +218,20 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.dropdown-toggle').forEach(function(toggle){
     toggle.addEventListener('click', function(){
       const section = toggle.closest('section');
-      if (section) section.classList.toggle('open');
+      if (section) {
+        section.classList.toggle('open');
+      }
     });
   });
 
-  // Left sidebar name toggle
+  // Left sidebar profile name
   const pToggle = document.querySelector('.profile-toggle');
-  const profile = document.querySelector('.profile');
-  if (pToggle && profile) {
+  if (pToggle) {
     pToggle.addEventListener('click', function(){
-      profile.classList.toggle('open');
+      const profile = pToggle.closest('.profile');
+      if (profile) {
+        profile.classList.toggle('open');
+      }
     });
   }
 });

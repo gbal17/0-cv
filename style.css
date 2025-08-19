@@ -353,3 +353,85 @@ section + section {
     margin-bottom: 10px;
     font-weight: bold !important;
 }
+
+
+/* Dropdown Section */
+.section-content {
+  display: none;
+  margin-top: 5px;
+}
+section.open .section-content {
+  display: block;
+}
+.dropdown-toggle {
+  cursor: pointer;
+  position: relative;
+}
+.dropdown-toggle::after {
+  content: " ▲";
+  font-size: 0.8em;
+}
+section.open .dropdown-toggle::after {
+  content: " ▼";
+}
+
+
+/* Ensure dropdown arrow shows for Publications */
+.publications .dropdown-toggle {
+    color: #c5ad7a !important; /* gold, consistent with others */
+}
+.publications .dropdown-toggle::after {
+    content: " ▲";
+    font-size: 0.8em;
+}
+.publications.open .dropdown-toggle::after {
+    content: " ▼";
+}
+
+/* Profile Dropdown */
+.profile-content {
+  display: none;
+  margin-top: 10px;
+}
+
+.profile.open .profile-content {
+  display: block;
+}
+
+.profile-toggle {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;        /* <-- add this line */
+  color: #c5ad7a !important;    /* gold like section titles */
+}
+
+.profile-toggle::after {
+  content: " ▲";
+  font-size: 0.8em;
+  margin-left: 5px;
+  vertical-align: baseline;     /* <-- keep arrow aligned */
+}
+
+.profile.open .profile-toggle::after {
+  content: " ▼";
+}
+
+/* Profile Dropdown — force the arrow to render on the H2 in the sidebar */
+.profile h2.profile-toggle {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;        /* ensures the ::after sits next to the text */
+  color: #c5ad7a !important;    /* gold like section titles */
+}
+
+.profile h2.profile-toggle::after {
+  content: " ▲";                /* closed state (matches other sections) */
+  font-size: 0.8em;
+  margin-left: 5px;
+  vertical-align: baseline;
+}
+
+.profile.open h2.profile-toggle::after {
+  content: " ▼";                /* open state */
+}
+
