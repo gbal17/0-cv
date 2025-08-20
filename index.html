@@ -9,61 +9,75 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Floating name in the top-left -->
+    <div class="top-left-name">
+    Giuseppe<br>
+    Baldassarre
+    </div>
+
     <div class="container">
         <aside class="profile">
-            <img src="profile.jpg" alt="Giuseppe Baldassarre" class="profile-img">
-<h2 class="profile-toggle">Giuseppe Baldassarre</h2>
+            <img src="profile.jpg" alt="Giuseppe Baldassarre" class="profile-img profile-toggle">
+
 <div class="profile-content">
+
+<!-- Quick Info (collapsible, CLOSED by default) -->
+<section class="profile-section quick-info">
+  <h2 class="dropdown-toggle">Quick Info</h2>
+  <div class="section-content">
     <h3>Geospatial Analyst</h3>
     <p>Independent GIS/RS Consultant<br>Geospatial Unit, Land and Water Division, FAO</p>
-    
+
     <div class="social-icons">
-        <a href="https://www.linkedin.com/in/giuseppe-baldassarre-671a7623/" target="_blank"><i class="fab fa-linkedin fa-3x"></i></a>
-        <a href="https://medium.com/@gi.baldassarre" target="_blank"><i class="fab fa-medium fa-3x"></i></a>
-        <a href="https://scholar.google.com/citations?user=M8b10awAAAAJ&hl=en-EN" target="_blank"><i class="fas fa-graduation-cap fa-3x"></i></a>
-        <a href="https://www.researchgate.net/profile/Giuseppe-Baldassarre?ev=prf_overview" target="_blank">
-            <i class="fab fa-researchgate fa-3x"></i>
-        </a>
-        <a href="https://github.com/gbal17" target="_blank"><i class="fab fa-github fa-3x"></i></a>
+      <a href="https://www.linkedin.com/in/giuseppe-baldassarre-671a7623/" target="_blank"><i class="fab fa-linkedin fa-3x"></i></a>
+      <a href="https://medium.com/@gi.baldassarre" target="_blank"><i class="fab fa-medium fa-3x"></i></a>
+      <a href="https://scholar.google.com/citations?user=M8b10awAAAAJ&hl=en-EN" target="_blank"><i class="fas fa-graduation-cap fa-3x"></i></a>
+      <a href="https://www.researchgate.net/profile/Giuseppe-Baldassarre?ev=prf_overview" target="_blank"><i class="fab fa-researchgate fa-3x"></i></a>
+      <a href="https://github.com/gbal17" target="_blank"><i class="fab fa-github fa-3x"></i></a>
     </div>
-    
+
     <p class="email"><a href="mailto:Giuseppe.Baldassarre@fao.org">📧 Giuseppe.Baldassarre@fao.org</a></p>
     <p class="email"><a href="mailto:gi.baldassarre@gmail.com">📧 gi.baldassarre@gmail.com</a></p>
-    
+
     <a href="cv.pdf" class="cv-btn" target="_blank">CV</a>
-    <!-- Map & Quote Container -->
-    <div class="map-quote-container">
-        <!-- Journey Title -->
-        <h3 class="journey-title">My Journey on a Map</h3>
+  </div>
+</section>
 
-        <!-- Map Image -->
-        <img src="map.jpg" alt="1459 World Map" class="map-image">
+<!-- My Journey on a Map (collapsible, CLOSED by default) -->
+<section class="profile-section journey">
 
-        <!-- Quote -->
-        <p class="quote">
-            "We shall not cease from exploration<br>
-            And the end of all our exploring<br>
-            Will be to arrive where we started<br>
-            And know the place for the first time."<br>
-            <span class="quote-author">— T.S. Eliot</span>
-        </p>
+  <h2 class="dropdown-toggle">My Journey on a Map</h2>
+  <div class="section-content">
+    <img src="map.jpg" alt="1459 World Map" class="map-image">
 
-        <p class="quote">
-            "If only the possible happened,<br>
-            nothing more would happen.<br>
-            If I only did what I can do,<br>
-            I wouldn't do anything."<br>
-            <span class="quote-author">— Jacques Derrida</span>
-        </p>
+    <!-- <p class="quote">
+      "We shall not cease from exploration<br>
+      And the end of all our exploring<br>
+      Will be to arrive where we started<br>
+      And know the place for the first time."<br>
+      <span class="quote-author">— T.S. Eliot</span>
+    </p>
 
-        <p class="quote">
-            "As you set out for Ithaka,<br>
-            hope your road is a long one,<br>
-            full of adventure, full of discovery..."<br>
-            <span class="quote-author">— Konstantinos Petrou Kavafis</span>
-        </p>
-    </div>
+    <p class="quote">
+      "If only the possible happened,<br>
+      nothing more would happen.<br>
+      If I only did what I can do,<br>
+      I wouldn't do anything."<br>
+      <span class="quote-author">— Jacques Derrida</span>
+    </p>
+
+    <p class="quote">
+      "As you set out for Ithaka,<br>
+      hope your road is a long one,<br>
+      full of adventure, full of discovery..."<br>
+      <span class="quote-author">— Konstantinos Petrou Kavafis</span>
+    </p> -->
+  </div>
+</section>
+
+
 </div>
+
 
 
             
@@ -213,7 +227,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Right-column sections
+  // Normal per-section toggles (right column)
   document.querySelectorAll('.dropdown-toggle').forEach(function(toggle){
     toggle.addEventListener('click', function(){
       const section = toggle.closest('section');
@@ -221,16 +235,102 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Left sidebar name toggle
+  // Clicking the name toggles ALL sections at once + the profile block
   const pToggle = document.querySelector('.profile-toggle');
   const profile = document.querySelector('.profile');
-  if (pToggle && profile) {
+  const sections = document.querySelectorAll('main.content section, aside.profile section');
+
+  if (pToggle && profile && sections.length) {
     pToggle.addEventListener('click', function(){
-      profile.classList.toggle('open');
+      // Determine target state based on current profile state
+      const shouldOpen = !profile.classList.contains('open');
+
+      // Toggle profile open/closed
+      profile.classList.toggle('open', shouldOpen);
+
+      // Toggle ALL right-column sections to the same state
+      sections.forEach(function(sec){
+        sec.classList.toggle('open', shouldOpen);
+      });
     });
   }
 });
 </script>
+
+
+<!-- Floating quotes along the bottom (left & right only) -->
+<!-- Bottom quotes (outside panels, left & right only) -->
+<!-- Bottom quotes (left + right) -->
+<!-- <div class="bottom-quotes" id="bottomQuotes">
+  <div class="quotes-left">
+    <span class="quote-chip">
+      “We shall not cease from exploration … arrive where we started … know the place for the first time.” — T.S. Eliot
+    </span>
+    <span class="quote-chip">
+      “If only the possible happened, nothing more would happen. If I only did what I can do, I wouldn’t do anything.” — Jacques Derrida
+    </span>
+  </div>
+  <div class="quotes-right">
+    <span class="quote-chip">
+      “As you set out for Ithaka, hope your road is a long one, full of adventure, full of discovery…” — Konstantinos Petrou Kavafis
+    </span>
+  </div>
+</div> -->
+
+
+
+
+<!-- Hidden YouTube Player (auto-play background music) -->
+<iframe
+  id="ytAudio"
+  width="1"
+  height="1"
+  style="position:absolute; left:-9999px; top:auto;"
+  src="https://www.youtube.com/embed/OaLhSrdHCBs?enablejsapi=1&loop=1&playlist=OaLhSrdHCBs&autoplay=1&mute=1&playsinline=1"
+  frameborder="0"
+  allow="autoplay; encrypted-media"
+  title="Background audio player">
+</iframe>
+
+<!-- Load YouTube IFrame API -->
+<script src="https://www.youtube.com/iframe_api"></script>
+
+<script>
+  let ytPlayer;
+  let isPlaying = false;
+
+  // YouTube API calls this when ready
+  function onYouTubeIframeAPIReady() {
+    ytPlayer = new YT.Player('ytAudio', {
+      events: {
+        'onReady': (event) => {
+          event.target.playVideo();   // auto start
+          event.target.unMute();
+          isPlaying = true;
+        }
+      }
+    });
+  }
+
+  // Toggle play/pause only on empty background clicks
+  document.addEventListener("click", (e) => {
+    // Ignore clicks on links, buttons, images, and other interactive areas
+    if (e.target.closest("a, button, .cv-btn, .social-icons, .dropdown-toggle, img")) {
+      return;
+    }
+
+    if (ytPlayer) {
+      if (isPlaying) {
+        ytPlayer.pauseVideo();
+      } else {
+        ytPlayer.playVideo();
+      }
+      isPlaying = !isPlaying;
+    }
+  });
+</script>
+
+
 
 
 </body>
