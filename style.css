@@ -216,10 +216,11 @@ h1, h2,
 
 /* Email Styling */
 .email {
-    font-size: 0.9em;
+    font-size: 0.85em !important;
     color: #555;
-    margin-bottom: 5px !important;
+    margin-bottom: 3px !important;
 }
+
 
 /* Publications Section */
 .publications {
@@ -575,4 +576,12 @@ section.open .section-content,
   transition: background 0.3s ease;
 }
 .music-toggle:hover { background: rgba(255,255,255,0.9); }
+
+.job-title {
+  font-size: 16px;        /* smaller than your name */
+  font-weight: normal;    /* not bold */
+  color: #f8f4f4;            /* same color as paragraph text */
+  margin-top: 5px;        /* a bit of space below your name */
+}
+
 
