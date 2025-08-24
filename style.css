@@ -641,7 +641,7 @@ section.open .section-content,
 
 .email1 {
     font-size: 0.75em !important;
-    color: #0073e6;
+    color: #f0f3f7;
     margin-bottom: 3px !important;
 }
 
@@ -883,4 +883,35 @@ section.open .section-content,
   pointer-events: none;
   /* optional translucency */
   opacity: 0.9;
+}
+
+
+/* Make job title and emails match the quote styling */
+.job-title,
+.email1 {
+  font-family: "American Typewriter", serif;
+  color: #fff;                                 /* same as quotes */
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);      /* same as quotes */
+  line-height: 1.4;
+}
+
+/* fine-tune sizes/spacings */
+.job-title {
+  font-size: 0.9em;          /* similar to quotes */
+  font-weight: normal;
+  margin-top: 5px;
+}
+
+.email1 {
+  font-size: 0.7em;        /* like your quote size */
+  margin: 2px 0;
+}
+
+/* if emails ever become links, inherit the same look */
+.email1 a {
+  color: inherit;
+  text-decoration: none;
+}
+.email1 a:hover {
+  text-decoration: underline;
 }
