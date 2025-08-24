@@ -9,10 +9,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<video autoplay muted playsinline id="bg-video">
-  <source src="back.mp4" type="video/mp4">
+<video
+  id="bg-video"
+  autoplay
+  muted
+  playsinline
+  preload="auto"
+>
+  <source src="back.mp4" type="video/mp4" />
   Your browser does not support HTML5 video.
 </video>
+
 
 
     <!-- Floating name in the top-left -->
@@ -408,6 +415,43 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const v = document.getElementById('bg-video');
+
+    // Slow down the video
+  v.playbackRate = 0.5;   // change to any value (1 = normal, 0.5 = half speed, 2 = double speed)
+
+
+  // If metadata is already loaded, we'll have duration; otherwise wait for it
+  function armFreeze() {
+    if (!isFinite(v.duration) || v.duration === 0) return;
+    // When the video hits (or passes) the end, pause on the last frame
+    v.addEventListener('ended', () => {
+      // Seek to just-before-end to avoid some browsers snapping to black/first frame
+      const EPS = 0.02; // 20 ms safety
+      try { v.currentTime = Math.max(0, v.duration - EPS); } catch (_) {}
+      v.pause();
+    });
+
+    // Extra guard: if a browser fires timeupdate instead of ended at the end
+    v.addEventListener('timeupdate', () => {
+      const EPS = 0.02;
+      if (v.duration && v.currentTime >= v.duration - EPS) {
+        v.pause();
+      }
+    });
+  }
+
+  if (v.readyState >= 1) armFreeze();          // HAVE_METADATA or better
+  else v.addEventListener('loadedmetadata', armFreeze);
+});
+</script>
 
 </body>
 </html>
