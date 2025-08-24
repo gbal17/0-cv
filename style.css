@@ -799,39 +799,49 @@ section.open .section-content,
 .tab-section .section-content ul { margin-top: 0 !important; }
 
 
+
 /* container */
 #quote-box {
   position: absolute;
-  bottom: 80px;
+  top: 400px;          /* was bottom: 80px; -> moves it up */
   left: 50px;
   width: 350px;
-  height: 400px;
+  /* height: auto helps the quote sit at the top of the box */
+  height: auto;
   overflow: hidden;
   display: flex;
-  align-items: center;
+  align-items: flex-start;  /* keep text at the top inside the box */
   justify-content: center;
   text-align: center;
+  padding: 4px 0;
+  z-index: 2;
 }
+
 
 /* base quote style */
 #quote-box .quote {
-  position: absolute;
   opacity: 0;
-  pointer-events: none;                 /* <-- don't block hover/clicks */
+  pointer-events: none;
   transition: opacity 1s ease, font-size 0.3s ease, transform 0.3s ease;
   font-family: "American Typewriter", serif;
   font-size: 1em;
   line-height: 1.4;
   color: white;
   text-shadow: 0 1px 4px rgba(0,0,0,0.8);
-  transform-origin: center;             /* nicer zoom */
+  margin: 0;
+  padding: 0;
+  position: absolute;   /* stacked by default */
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
-/* visible one */
+/* active quote behaves normally (so it sits at the top) */
 #quote-box .quote.active {
   opacity: 1;
-  pointer-events: auto;                 /* <-- only active is hoverable */
-  z-index: 1;                           /* ensure it's on top */
+  pointer-events: auto;
+  position: relative;   /* ← this removes absolute positioning */
+  z-index: 1;
 }
 
 /* hover enlarge only for the visible one */
@@ -840,4 +850,3 @@ section.open .section-content,
   line-height: 1.6;
   transform: scale(1.05);
 }
-
