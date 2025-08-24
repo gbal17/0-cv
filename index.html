@@ -42,17 +42,16 @@
 
 
     <div class="container">
-        <aside class="profile">
-            <img src="profile.jpg" alt="Giuseppe Baldassarre" class="profile-img profile-toggle">
+<aside class="profile">
+  <div class="profile-pic-wrapper" id="profilePicToggle">
+    <img src="profile.jpg" alt="Giuseppe Baldassarre" class="profile-img">
+  </div>
 
-<div class="profile-content">
+  <div class="profile-content">
 
-</div>
+  </div>
+</aside>
 
-
-
-            
-        </aside>
 
         <main class="content">   
 
@@ -457,35 +456,24 @@ document.addEventListener('DOMContentLoaded', () => {
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.getElementById("bg-video");
-  const photo = document.querySelector(".profile-img");
+  const profilePicToggle = document.getElementById("profilePicToggle");
 
-  // list of video files in order
-  const playlist = ["back.mp4", "back1.mp4", "back2.mp4", "back3.mp4"];
-  let index = 0;
+  // List of your background videos
+  const videos = ["back.mp4", "back1.mp4", "back2.mp4", "back3.mp4"];
+  let currentIndex = 0;
 
-  function playVideo(i) {
-    index = i % playlist.length;
-    video.src = playlist[index];
-    video.load();
-    video.play();
+  // Function to switch video
+  function switchVideo() {
+    currentIndex = (currentIndex + 1) % videos.length;  // cycle through
+    video.src = videos[currentIndex];                   // update video source
+    video.play();                                       // start playing
   }
 
-  // Play next video after 10s pause when one ends
-  video.addEventListener("ended", () => {
-    setTimeout(() => {
-      playVideo(index + 1);
-    }, 0);
-  });
-
-  // Allow user to change background by clicking profile photo
-  photo.addEventListener("click", () => {
-    playVideo(index + 1);
-  });
-
-  // start with first video
-  playVideo(index);
+  // When user clicks the profile picture, switch video
+  profilePicToggle.addEventListener("click", switchVideo);
 });
 </script>
+
 
 
 
