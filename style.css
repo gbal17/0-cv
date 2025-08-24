@@ -643,20 +643,21 @@ section.open .section-content,
 
 /* Compact tabs */
 .tab-btn {
-  background: #ffffff;
+  background: rgba(var(--section-bg-color), var(--section-opacity)); /* same as content */
   color: #000000;
   border: 1px solid #bbb;
-  border-radius: 3px;
-  padding: 2px 6px;          /* very compact padding */
+  border-radius: 6px;          /* round like content box */
+  padding: 4px 10px;
   font-family: 'Futura', sans-serif;
-  font-size: 12px;           /* smaller text */
+  font-size: 12px;
   font-weight: normal;
   cursor: pointer;
   text-shadow: none;
-  box-shadow: none;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.1); /* subtle shadow like content */
   line-height: 1.2;
   transition: background 0.2s ease, border-color 0.2s ease;
 }
+
 
 .tab-btn:hover {
   background: #f7f7f7;
