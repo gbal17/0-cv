@@ -56,17 +56,23 @@ body {
 }
 
 .profile-img {
-  width: 200px;
-  height: 200px;
+  width: 150px;   /* reduced from 200px */
+  height: 150px;  /* keep it square */
   border-radius: 50%;
 
-  /* Wider fading zone (fade starts earlier at 45%) */
-  -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 100%);
+  /* move the image upward */
+  margin-top: -20px;   /* negative margin pulls it up */
+
+  /* overall transparency */
+  opacity: 0.8;
+
+  /* softer fade edges (smaller solid area, more transparent rim) */
+  -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 35%, rgba(0,0,0,0) 100%);
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
   -webkit-mask-size: cover;
 
-  mask-image: radial-gradient(circle, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 100%);
+  mask-image: radial-gradient(circle, rgba(0,0,0,1) 35%, rgba(0,0,0,0) 100%);
   mask-repeat: no-repeat;
   mask-position: center;
   mask-size: cover;
@@ -76,6 +82,7 @@ body {
     drop-shadow(0 0 20px rgba(255, 255, 255, 0.9))
     drop-shadow(0 0 40px rgba(255, 255, 255, 0.4));
 }
+
 
 
 
@@ -135,10 +142,16 @@ body {
 
 /* Right Content Section */
 .content {
-    flex: 1.5;
-    flex-grow: 2;
-    margin-left: 30px;
+  flex: 1.5;
+  flex-grow: 2;
+  margin-left: 30px;
+
+  /* For tabs, we want a simple vertical stack, not flex rows */
+  display: block;
 }
+
+
+
 
 /* Section Styling */
 section {
@@ -389,9 +402,9 @@ section li:last-of-type {
     margin-bottom: 0;
 }
 
-section + section {
+/* section + section {
     margin-top: -8px;
-}
+} */
 
 /* .journey-title {
     font-family: "American Typewriter", serif;
@@ -562,6 +575,26 @@ section.open .section-content,
     z-index: 9999;
 }
 
+/* --- Tabs: visibility + hide duplicated panel title --- */
+.tab-section { display: none; }
+.tab-section.active { display: block; }
+
+/* keep the content visible when the panel is active */
+.tab-section .section-content { display: block; }
+
+/* hide the <h2> inside panels (title already shown in the tab bar) */
+.tab-section > h2 { display: none; }
+
+/* --- Tabs: readable panel styling --- */
+.tab-section.active .section-content {
+  background: rgba(var(--section-bg-color), var(--section-opacity));
+  border-radius: 10px;
+  padding: 10px 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-top: 6px;
+}
+
+
 .music-toggle {
   position: fixed;
   bottom: 20px;
@@ -584,4 +617,226 @@ section.open .section-content,
   margin-top: 5px;        /* a bit of space below your name */
 }
 
+
+.email1 {
+    font-size: 0.75em !important;
+    color: #0073e6;
+    margin-bottom: 3px !important;
+}
+
+
+
+
+
+
+
+/* --- TAB BAR (top) --- */
+.tabbar {
+  position: sticky;
+  top: 8px;
+  display: flex;
+  gap: 6px;                  /* smaller spacing between tabs */
+  justify-content: center;
+  margin: 4px 0 10px;
+  z-index: 5;
+}
+
+/* Compact tabs */
+.tab-btn {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  padding: 2px 6px;          /* very compact padding */
+  font-family: 'Futura', sans-serif;
+  font-size: 12px;           /* smaller text */
+  font-weight: normal;
+  cursor: pointer;
+  text-shadow: none;
+  box-shadow: none;
+  line-height: 1.2;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.tab-btn:hover {
+  background: #f7f7f7;
+  border-color: #999;
+}
+
+.tab-btn.active {
+  background: #ffffff;
+  border-color: #666;
+}
+
+
+.tab-section { display: none; }
+.tab-section.active { display: block; }
+
+
+
+/* --- Tabs: alignment + spacing (append to end of style.css) --- */
+
+/* Keep the tab bar snug with the content */
+.tabbar {
+  margin: 0 0 8px 0;       /* small gap under the titles */
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+/* All panels line up and take full width under the tabbar */
+.tab-section {
+  display: none;
+  width: 100%;
+  margin: 0;               /* remove any vertical offset */
+  padding: 0;              /* panel box padding will live on .section-content */
+}
+
+/* Show only the active panel */
+.tab-section.active { display: block; }
+
+/* Hide the duplicate title inside the panel */
+.tab-section > h2 { display: none; }
+
+/* Panel box: translucent white for readability, tight to the tabs */
+.tab-section .section-content {
+  background: rgba(var(--section-bg-color), var(--section-opacity));
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+  padding: 10px 15px;
+  margin: 0;               /* removes extra gap above/below the box */
+}
+
+/* Nuke any top gap inside content */
+.tab-section .section-content > *:first-child { margin-top: 0; }
+/* Keep items nicely spaced but compact */
+.tab-section .section-content p { margin: 6px 0; }
+
+/* Ensure the right column aligns items to the top edge */
+.content { align-items: flex-start; }
+
+
+/* Make all tab content start at the same vertical level */
+.tab-section {
+  margin-top: 0;         /* remove default spacing */
+  padding-top: 0;        /* remove default padding */
+}
+
+.tab-section h2 {
+  display: none;         /* hide the repeated section titles */
+}
+
+.section-content {
+  margin-top: 0;
+  padding: 15px;
+  background: rgba(255,255,255,0.8);  /* keeps readability */
+  border-radius: 10px;
+}
+
+/* FINAL overrides for tabs — put these at the very end of style.css */
+.tab-section { margin-top: 0; padding-top: 0; }
+.tab-section > h2 { display: none; }
+
+/* Make sure content is visible for the active tab and starts tight to the tabs */
+.tab-section .section-content {
+  display: block !important;   /* defeats the old display:none */
+  margin-top: 0 !important;    /* removes stray top gap */
+  background: rgba(var(--section-bg-color), var(--section-opacity));
+  border-radius: 10px;
+  padding: 10px 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Remove any margin from the first element inside the content box */
+.tab-section .section-content > *:first-child { margin-top: 0 !important; }
+
+
+
+/* === FORCE ALL TAB PANELS TO START AT THE SAME LEVEL === */
+
+/* cancel the generic "section + section" offset for tabs */
+.tab-section + .tab-section { margin-top: 0 !important; }
+
+/* remove any padding/margin that the generic section rule adds */
+.tab-section { padding: 0 !important; margin: 0 !important; }
+
+/* keep the content box tight under the tabbar */
+.tab-section .section-content { margin-top: 0 !important; }
+
+/* kill default top margins on the first real child (p or ul) */
+.tab-section .section-content > p:first-of-type,
+.tab-section .section-content > ul:first-of-type { margin-top: 0 !important; }
+
+/* lists in GEE Apps / Trainings often start the panel; remove their top margin */
+.tab-section .section-content ul { margin-top: 0 !important; }
+
+
+
+
+
+
+/* Tab panels: all start at the same level */
+.tab-section { margin: 0 !important; padding: 0 !important; width: 100%; }
+.tab-section + .tab-section { margin-top: 0 !important; }
+.tab-section > h2 { display: none; }
+
+.tabbar { margin: 0 0 8px 0; }
+
+/* Box styling, tight to the tabbar */
+.tab-section .section-content {
+  display: block !important;
+  margin-top: 0 !important;
+  background: rgba(var(--section-bg-color), var(--section-opacity));
+  border-radius: 10px;
+  padding: 10px 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Kill any top margin on the first element inside the panel */
+.tab-section .section-content > *:first-child { margin-top: 0 !important; }
+/* Lists often start the panel (GEE/Trainings) */
+.tab-section .section-content ul { margin-top: 0 !important; }
+
+
+/* container */
+#quote-box {
+  position: absolute;
+  bottom: 80px;
+  left: 50px;
+  width: 350px;
+  height: 400px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* base quote style */
+#quote-box .quote {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;                 /* <-- don't block hover/clicks */
+  transition: opacity 1s ease, font-size 0.3s ease, transform 0.3s ease;
+  font-family: "American Typewriter", serif;
+  font-size: 1em;
+  line-height: 1.4;
+  color: white;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+  transform-origin: center;             /* nicer zoom */
+}
+
+/* visible one */
+#quote-box .quote.active {
+  opacity: 1;
+  pointer-events: auto;                 /* <-- only active is hoverable */
+  z-index: 1;                           /* ensure it's on top */
+}
+
+/* hover enlarge only for the visible one */
+#quote-box .quote.active:hover {
+  font-size: 1.3em;
+  line-height: 1.6;
+  transform: scale(1.05);
+}
 
