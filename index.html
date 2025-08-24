@@ -453,5 +453,44 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
+<<<<<<< HEAD
+=======
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const video = document.getElementById("bg-video");
+  const photo = document.querySelector(".profile-img");
+
+  // list of video files in order
+  const playlist = ["back.mp4", "back1.mp4", "back2.mp4", "back3.mp4"];
+  let index = 0;
+
+  function playVideo(i) {
+    index = i % playlist.length;
+    video.src = playlist[index];
+    video.load();
+    video.play();
+  }
+
+  // Play next video after 10s pause when one ends
+  video.addEventListener("ended", () => {
+    setTimeout(() => {
+      playVideo(index + 1);
+    }, 10000);
+  });
+
+  // Allow user to change background by clicking profile photo
+  photo.addEventListener("click", () => {
+    playVideo(index + 1);
+  });
+
+  // start with first video
+  playVideo(index);
+});
+</script>
+
+
+
+>>>>>>> 3031a73 (Initial commit: portfolio with video backgrounds, tabs, and quotes)
 </body>
 </html>
