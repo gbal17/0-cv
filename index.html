@@ -452,27 +452,48 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.getElementById("bg-video");
   const profilePicToggle = document.getElementById("profilePicToggle");
 
-  // List of your background videos
-  const videos = ["back.mp4", "back1.mp4", "back2.mp4", "back3.mp4"];
-  let currentIndex = 0;
+  const playlist = ["back.mp4", "back1.mp4", "back2.mp4", "back3.mp4"];
+  let index = 0;
 
-  // Function to switch video
-  function switchVideo() {
-    currentIndex = (currentIndex + 1) % videos.length;  // cycle through
-    video.src = videos[currentIndex];                   // update video source
-    video.play();                                       // start playing
+  function playIndex(i) {
+    index = (i + playlist.length) % playlist.length;
+    video.src = playlist[index];
+    video.load();            // prepare the video
+    video.playbackRate = 0.5; // slow down if you want
+    video.currentTime = 0;
+
+    // only start once metadata is ready
+    video.onloadeddata = () => {
+      const p = video.play();
+      if (p && typeof p.catch === "function") {
+        p.catch(() => {}); // ignore autoplay block errors
+      }
+    };
   }
 
-  // When user clicks the profile picture, switch video
-  profilePicToggle.addEventListener("click", switchVideo);
+  // Auto advance at end
+  video.addEventListener("ended", () => {
+    playIndex(index + 1);
+  });
+
+  // Manual skip with click
+  if (profilePicToggle) {
+    profilePicToggle.addEventListener("click", () => {
+      playIndex(index + 1);
+    });
+  }
+
+  // start playlist
+  playIndex(0);
 });
 </script>
+
+
 
 
 
