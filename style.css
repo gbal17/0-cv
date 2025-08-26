@@ -1082,3 +1082,8 @@ body.video2 .tab-section > h2 {
   height: 100%;
   object-fit: contain;        /* keep the transparent PNG intact */
 }
+
+/* White outline when back2.mp4 is active (body has .video2) */
+body.video2 .profile-pic-wrapper {
+  border: 1px solid #fff !important;
+}
