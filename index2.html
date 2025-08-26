@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giuseppe Baldassarre | Geospatial Analyst at FAO</title>
+    <title>Giuseppe Baldassarre | Geospatial Analyst</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
@@ -22,22 +22,22 @@
 
 
 
-
-<!-- <div class="top-left-name">
+    <!-- Floating name in the top-left -->
+<div class="top-left-name">
   <div class="name">Giuseppe<br>Baldassarre</div>
-  <div class="job-title">Geospatial Analyst @ FAO</div>
+  <div class="job-title">Geospatial Analyst</div>
     <div class="permanent-icons">
     <a href="https://www.linkedin.com/in/giuseppe-baldassarre-671a7623/" target="_blank"><i class="fab fa-linkedin"></i></a>
     <a href="https://medium.com/@gi.baldassarre" target="_blank"><i class="fab fa-medium"></i></a>
     <a href="https://scholar.google.com/citations?user=M8b10awAAAAJ&hl=en-EN" target="_blank"><i class="fas fa-graduation-cap"></i></a>
-    <br> 
+    <br> <!-- ⬅️ forces next icons to go on new line -->
     <a href="https://www.researchgate.net/profile/Giuseppe-Baldassarre?ev=prf_overview" target="_blank"><i class="fab fa-researchgate"></i></a>
     <a href="https://github.com/gbal17" target="_blank"><i class="fab fa-github"></i></a>
     <a href="cv.pdf" class="cv-icon" target="_blank">CV</a>
     </div>
     <div class="email1">Giuseppe.Baldassarre@fao.org</div>
     <div class="email1">gi.baldassarre@gmail.com</div>
-</div> -->
+</div>
 
 
 
@@ -46,30 +46,6 @@
   <div class="profile-pic-wrapper" id="profilePicToggle">
     <img src="profile.jpg" alt="Giuseppe Baldassarre" class="profile-img">
   </div>
-
-
-
-  <!-- PROFILE INFO PANEL -->
-<!-- PROFILE INFO PANEL -->
-<div id="profileInfo" class="profile-info-panel profile-card">
-  <div class="name">Giuseppe Baldassarre</div>
-  <div class="job-title">Geospatial Analyst</div>
-
-  <div class="permanent-icons">
-    <a href="https://www.linkedin.com/in/giuseppe-baldassarre-671a7623/" target="_blank"><i class="fab fa-linkedin"></i></a>
-    <a href="https://medium.com/@gi.baldassarre" target="_blank"><i class="fab fa-medium"></i></a>
-    <a href="https://scholar.google.com/citations?user=M8b10awAAAAJ&hl=en-EN" target="_blank"><i class="fas fa-graduation-cap"></i></a>
-    <a href="https://www.researchgate.net/profile/Giuseppe-Baldassarre?ev=prf_overview" target="_blank"><i class="fab fa-researchgate"></i></a>
-    <a href="https://github.com/gbal17" target="_blank"><i class="fab fa-github"></i></a>
-    <a href="cv.pdf" class="cv-icon" target="_blank">CV</a>
-  </div>
-
-  <div class="email1">Giuseppe.Baldassarre@fao.org</div>
-  <div class="email1">gi.baldassarre@gmail.com</div>
-</div>
-
-
-
 
   <div class="profile-content">
 
@@ -314,22 +290,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-
-
-  // MOVE background change to QUOTE CLICK (not profile)
-  // We'll hook into the existing playlist function later in your file.
-  window.__advanceBackgroundFromQuote = function (fnAdvance) {
-    if (quoteBox) {
-      quoteBox.addEventListener('click', fnAdvance);
-    }
-  };
-});
-</script>
-
-
-
 
 
 <!-- Floating quotes along the bottom (left & right only) -->
@@ -482,6 +442,9 @@ document.addEventListener('DOMContentLoaded', () => {
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.getElementById("bg-video");
+  const profilePicToggle = document.getElementById("profilePicToggle");
+  const topLeft = document.querySelector(".top-left-name"); // container per le icone
+  const body = document.body;
 
   const playlist = ["back.mp4", "back1.mp4", "back2.mp4", "back3.mp4"];
   let index = 0;
@@ -492,55 +455,37 @@ document.addEventListener("DOMContentLoaded", () => {
     video.load();
     video.playbackRate = 0.5;
     video.currentTime = 0;
+
     video.onloadeddata = () => {
       const p = video.play();
       if (p && typeof p.catch === "function") p.catch(() => {});
     };
 
-    // OPTIONAL: add a body class for per-background styling (e.g., icons color)
-    document.body.dataset.bg = `bg-${index}`; // bg-0, bg-1, bg-2, bg-3
+    // icone gialle solo con il 2° video (index === 1 -> back1.mp4)
+    if (topLeft) {
+      if (index === 1) topLeft.classList.add("icons-yellow");
+      else topLeft.classList.remove("icons-yellow");
+    }
+
+    // titoli bianchi solo con il 3° video della playlist (index === 2 -> back2.mp4)
+    body.classList.toggle("video2", index === 2);
   }
 
-  // Auto-advance at end
+  // avanzamento automatico
   video.addEventListener("ended", () => playIndex(index + 1));
 
-  // Attach quote click to advance
-  if (typeof window.__advanceBackgroundFromQuote === 'function') {
-    window.__advanceBackgroundFromQuote(() => playIndex(index + 1));
+  // avanzamento manuale al click sul profilo
+  if (profilePicToggle) {
+    profilePicToggle.addEventListener("click", () => playIndex(index + 1));
   }
 
-  // start
+  // start playlist
   playIndex(0);
 });
 </script>
 
 
 
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const circle = document.getElementById('profilePicToggle');
-  const panel  = document.getElementById('profileInfo');
-  let pinned = false;
-
-  // click the circle => toggle pin
-  circle.addEventListener('click', (e) => {
-    pinned = !pinned;
-    panel.classList.toggle('pinned', pinned);
-    e.stopPropagation(); // don't let it bubble to document
-  });
-
-  // clicks inside the card do nothing (keep it pinned)
-  panel.addEventListener('click', (e) => e.stopPropagation());
-
-  // click anywhere else => unpin & hide
-  document.addEventListener('click', () => {
-    if (!pinned) return;
-    pinned = false;
-    panel.classList.remove('pinned');
-  });
-});
-</script>
 
 
 
