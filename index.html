@@ -44,11 +44,8 @@
     <div class="container">
 <aside class="profile">
   <div class="profile-pic-wrapper" id="profilePicToggle">
-    <!-- This video will show the *next* background inside the circle -->
-    <video id="next-video" autoplay muted loop playsinline></video>
     <img src="profile.jpg" alt="Giuseppe Baldassarre" class="profile-img">
   </div>
-
 
   <div class="profile-content">
 
@@ -455,14 +452,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-
-
-
-
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const bgVideo = document.getElementById("bg-video");
-  const nextVideo = document.getElementById("next-video");
+  const video = document.getElementById("bg-video");
   const profilePicToggle = document.getElementById("profilePicToggle");
 
   const playlist = ["back.mp4", "back1.mp4", "back2.mp4", "back3.mp4"];
@@ -470,34 +462,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function playIndex(i) {
     index = (i + playlist.length) % playlist.length;
+    video.src = playlist[index];
+    video.load();            // prepare the video
+    video.playbackRate = 0.5; // slow down if you want
+    video.currentTime = 0;
 
-    // set background video
-    bgVideo.src = playlist[index];
-    bgVideo.load();
-    bgVideo.play();
-
-    // preload next video into circle
-    const nextIndex = (index + 1) % playlist.length;
-    nextVideo.src = playlist[nextIndex];
-    nextVideo.load();
-    nextVideo.play();
+    // only start once metadata is ready
+    video.onloadeddata = () => {
+      const p = video.play();
+      if (p && typeof p.catch === "function") {
+        p.catch(() => {}); // ignore autoplay block errors
+      }
+    };
   }
 
-  // auto advance when background ends
-  bgVideo.addEventListener("ended", () => {
+  // Auto advance at end
+  video.addEventListener("ended", () => {
     playIndex(index + 1);
   });
 
-  // manual advance when clicking profile picture
-  profilePicToggle.addEventListener("click", () => {
-    playIndex(index + 1);
-  });
+  // Manual skip with click
+  if (profilePicToggle) {
+    profilePicToggle.addEventListener("click", () => {
+      playIndex(index + 1);
+    });
+  }
 
-  // start at first video
+  // start playlist
   playIndex(0);
 });
 </script>
-
 
 
 
