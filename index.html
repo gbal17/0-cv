@@ -442,7 +442,8 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.getElementById("bg-video");
   const profilePicToggle = document.getElementById("profilePicToggle");
-  const topLeft = document.querySelector(".top-left-name"); // container for icons
+  const topLeft = document.querySelector(".top-left-name"); // container per le icone
+  const body = document.body;
 
   const playlist = ["back.mp4", "back1.mp4", "back2.mp4", "back3.mp4"];
   let index = 0;
@@ -454,24 +455,25 @@ document.addEventListener("DOMContentLoaded", () => {
     video.playbackRate = 0.5;
     video.currentTime = 0;
 
-    // autoplay safely
     video.onloadeddata = () => {
       const p = video.play();
       if (p && typeof p.catch === "function") p.catch(() => {});
     };
 
-    // toggle yellow class only when index == 1 (second video)
-    if (index === 1) {
-      topLeft.classList.add("icons-yellow");
-    } else {
-      topLeft.classList.remove("icons-yellow");
+    // icone gialle solo con il 2° video (index === 1 -> back1.mp4)
+    if (topLeft) {
+      if (index === 1) topLeft.classList.add("icons-yellow");
+      else topLeft.classList.remove("icons-yellow");
     }
+
+    // titoli bianchi solo con il 3° video della playlist (index === 2 -> back2.mp4)
+    body.classList.toggle("video2", index === 2);
   }
 
-  // auto advance
+  // avanzamento automatico
   video.addEventListener("ended", () => playIndex(index + 1));
 
-  // manual advance on profile click
+  // avanzamento manuale al click sul profilo
   if (profilePicToggle) {
     profilePicToggle.addEventListener("click", () => playIndex(index + 1));
   }
@@ -479,8 +481,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // start playlist
   playIndex(0);
 });
-
 </script>
+
 
 
 

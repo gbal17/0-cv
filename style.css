@@ -639,9 +639,11 @@ section.open .section-content,
 
 /* Compact tabs */
 .tab-btn {
-  background: rgba(var(--section-bg-color), var(--section-opacity)); /* same as content */
+  /* background: rgba(var(--section-bg-color), var(--section-opacity));  */
+  background: transparent;   /* no white background */
+
   color: #000000;
-  border: 1px solid #bbb;
+  border: 1px solid #070707;
   border-radius: 6px;          /* round like content box */
   padding: 4px 10px;
   font-family: 'Futura', sans-serif;
@@ -1027,4 +1029,37 @@ section.open .section-content,
 .icons-yellow .permanent-icons a:hover,
 .icons-yellow .cv-icon:hover {
   color: #e6d300 !important;   /* darker yellow */
+}
+
+
+
+/* ===== When video is back2.mp4 (index 2) ===== */
+body.video2 h1,
+body.video2 h2,
+body.video2 .dropdown-toggle,
+body.video2 .quick-info .dropdown-toggle,
+body.video2 .journey .dropdown-toggle {
+  color: #fff !important;
+  text-shadow: 0 0 8px rgba(0,0,0,0.8) !important;
+}
+
+/* Make the top tab buttons white too */
+body.video2 .tab-btn {
+  color: #fff !important;
+  border-color: #fff !important;
+  text-shadow: 0 0 6px rgba(0,0,0,0.6) !important;
+  background: transparent !important;
+}
+body.video2 .tab-btn:hover,
+body.video2 .tab-btn.active {
+  color: #fff !important;
+  border-color: #fff !important;
+  background: rgba(255,255,255,0.12) !important;
+}
+
+/* If you also show section titles inside panels, force them white */
+body.video2 section > h2,
+body.video2 .tab-section > h2 {
+  color: #fff !important;
+  text-shadow: 0 0 8px rgba(0,0,0,0.8) !important;
 }
