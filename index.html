@@ -442,6 +442,7 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.getElementById("bg-video");
   const profilePicToggle = document.getElementById("profilePicToggle");
+  const topLeft = document.querySelector(".top-left-name"); // container for icons
 
   const playlist = ["back.mp4", "back1.mp4", "back2.mp4", "back3.mp4"];
   let index = 0;
@@ -449,34 +450,36 @@ document.addEventListener("DOMContentLoaded", () => {
   function playIndex(i) {
     index = (i + playlist.length) % playlist.length;
     video.src = playlist[index];
-    video.load();            // prepare the video
-    video.playbackRate = 0.5; // slow down if you want
+    video.load();
+    video.playbackRate = 0.5;
     video.currentTime = 0;
 
-    // only start once metadata is ready
+    // autoplay safely
     video.onloadeddata = () => {
       const p = video.play();
-      if (p && typeof p.catch === "function") {
-        p.catch(() => {}); // ignore autoplay block errors
-      }
+      if (p && typeof p.catch === "function") p.catch(() => {});
     };
+
+    // toggle yellow class only when index == 1 (second video)
+    if (index === 1) {
+      topLeft.classList.add("icons-yellow");
+    } else {
+      topLeft.classList.remove("icons-yellow");
+    }
   }
 
-  // Auto advance at end
-  video.addEventListener("ended", () => {
-    playIndex(index + 1);
-  });
+  // auto advance
+  video.addEventListener("ended", () => playIndex(index + 1));
 
-  // Manual skip with click
+  // manual advance on profile click
   if (profilePicToggle) {
-    profilePicToggle.addEventListener("click", () => {
-      playIndex(index + 1);
-    });
+    profilePicToggle.addEventListener("click", () => playIndex(index + 1));
   }
 
   // start playlist
   playIndex(0);
 });
+
 </script>
 
 

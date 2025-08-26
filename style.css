@@ -1002,3 +1002,29 @@ section.open .section-content,
   transform: translateY(-1px); /* moves the circle up */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* shadow below */
 }
+
+
+/* default state: blue */
+.permanent-icons a,
+.cv-icon {
+  color: #0073e6 !important;
+  transition: color 0.3s ease;
+}
+
+/* hover effect for default blue */
+.permanent-icons a:hover,
+.cv-icon:hover {
+  color: #005bb5 !important;
+}
+
+/* yellow state (when bg-video is #2) */
+.icons-yellow .permanent-icons a,
+.icons-yellow .cv-icon {
+  color: #FFD700 !important;   /* gold/yellow */
+}
+
+/* hover effect when yellow */
+.icons-yellow .permanent-icons a:hover,
+.icons-yellow .cv-icon:hover {
+  color: #e6d300 !important;   /* darker yellow */
+}
