@@ -220,82 +220,68 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabbar   = document.querySelector('.tabbar');
   const buttons  = Array.from(document.querySelectorAll('.tab-btn'));
   const sections = Array.from(document.querySelectorAll('.tab-section'));
+  const panels   = Array.from(document.querySelectorAll('.tab-section .section-content'));
 
-  let pinnedId = null;   // tab that stays open after click (null = none)
+  let pinnedId   = null;
+  let hoverId    = null;
+  let hideTimer  = null;
 
-  function setActive(id) {
+  function setActive(id){
     sections.forEach(sec => sec.classList.toggle('active', !!id && sec.id === id));
     buttons.forEach(btn => btn.classList.toggle('active', !!id && btn.dataset.target === id));
   }
 
-  // Toggle pin on click
+  const startHideTimer = () => {
+    if (pinnedId) return;
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => {
+      if (!pinnedId) { hoverId = null; setActive(null); }
+    }, 120); // debounce window
+  };
+  const cancelHideTimer = () => clearTimeout(hideTimer);
+
+  // Click = pin/unpin
   buttons.forEach(btn => {
     btn.addEventListener('click', (e) => {
       const id = btn.dataset.target;
-      if (pinnedId === id) {
-        // clicking the same tab again unpins & hides
-        pinnedId = null;
-        setActive(null);
-      } else {
-        pinnedId = id;
-        setActive(id);
-      }
-      e.stopPropagation(); // don't let the document click close it
+      if (pinnedId === id){ pinnedId = null; setActive(null); }
+      else { pinnedId = id; setActive(id); }
+      e.stopPropagation();
     });
   });
 
-  // Hover preview (appears on hover, disappears on leave if not pinned)
+  // Hover preview
   buttons.forEach(btn => {
     btn.addEventListener('mouseenter', () => {
-      if (!pinnedId) setActive(btn.dataset.target);
+      if (pinnedId) return;
+      hoverId = btn.dataset.target;
+      setActive(hoverId);
+      cancelHideTimer();        // we're over the bar
     });
   });
 
-  // If the pointer leaves BOTH the tabbar and the active panel and nothing is pinned, hide
-  const maybeHideOnMouseLeave = () => {
-    if (pinnedId) return;
-    setActive(null);
-  };
-  // leave tabbar
-  tabbar.addEventListener('mouseleave', () => {
-    // only hide if the mouse isn't currently over the panel either
-    // (simple version: give a tiny delay; panel mouseenter will cancel by pinning, which we don't do here)
-    setTimeout(() => { if (!pinnedId) setActive(null); }, 10);
+  // When leaving the tabbar, wait briefly; if we hit the panel, cancel the hide
+  tabbar.addEventListener('mouseleave', startHideTimer);
+  tabbar.addEventListener('mouseenter', cancelHideTimer);
+
+  // Keep open while over the panel; hide only after leaving it too
+  panels.forEach(panel => {
+    panel.addEventListener('mouseenter', cancelHideTimer);
+    panel.addEventListener('mouseleave', startHideTimer);
   });
 
-  // Clicking the empty area of the tabbar (not on a button) closes if pinned
-  tabbar.addEventListener('click', (e) => {
-    if (!e.target.closest('.tab-btn') && pinnedId) {
-      pinnedId = null;
-      setActive(null);
-    }
-  });
-
-  // Global click: close when clicking anywhere that's NOT a tab button or the active panel content
+  // Click outside => unpin & close
   document.addEventListener('click', (e) => {
-    const clickedTabBtn   = e.target.closest('.tab-btn');
-    const clickedInPanel  = e.target.closest('.tab-section.active .section-content');
-    if (!clickedTabBtn && !clickedInPanel && pinnedId) {
+    const inBtn  = e.target.closest('.tab-btn');
+    const inPane = e.target.closest('.tab-section.active .section-content');
+    if (!inBtn && !inPane && pinnedId){
       pinnedId = null;
       setActive(null);
     }
   });
-
-  // Also close when clicking empty space inside the content column but outside the white box
-  const content = document.querySelector('main.content') || document.querySelector('.content');
-  if (content) {
-    content.addEventListener('click', (e) => {
-      const inPanel = e.target.closest('.tab-section.active .section-content');
-      const inBtn   = e.target.closest('.tab-btn');
-      const inBar   = e.target.closest('.tabbar');
-      if (!inPanel && !inBtn && !inBar && pinnedId) {
-        pinnedId = null;
-        setActive(null);
-      }
-    });
-  }
 });
 </script>
+
 
 
 
