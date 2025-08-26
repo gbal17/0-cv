@@ -1127,7 +1127,7 @@ aside.profile:hover {
 
 /* Fix the card position under the circle */
 .profile-info-panel {
-  display: none;
+  display: block !important;
   position: absolute;   /* ⬅️ take it out of the normal flow */
   top: 10px;           /* distance below the circle */
   left: 0;              /* align left with the circle */
@@ -1208,5 +1208,38 @@ aside.profile { pointer-events: none; }
 #profileInfo { position: relative; z-index: 3; }
 
 
+
+
+
+/* FINAL: card is visible on load */
+.profile-info-panel {
+  display: block !important;      /* <— override earlier display:none */
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto;
+
+  position: fixed;                /* keep position stable */
+  left: -30px;                     /* move as you like */
+  top: 10px;
+  padding: 10px 14px;
+  background: rgba(244, 245, 251, 0);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  width: max-content;
+  z-index: 1000;
+}
+
+/* Hidden only when we add the toggle class from JS */
+.profile-info-panel.is-hidden {
+  display: none !important;
+}
+
+
+aside.profile:hover .profile-info-panel,
+.profile:hover .profile-info-panel {
+  display: block !important;
+}
 
 
