@@ -195,7 +195,7 @@ a:visited{ color:#0073e6 !important; }
   opacity:1; pointer-events:auto; position:relative; z-index:1;
 }
 #quote-box .quote.active:hover{
-  font-size:0.9em; line-height:1.6; transform:scale(1.05);
+  font-size:0.8em; line-height:1.6; transform:scale(1.025);
 }
 
 /* ---------------- Sections quick tweaks ---------------- */
@@ -377,4 +377,50 @@ body[data-bg="bg-2"] .tab-btn.active {
   .email1{ font-size: .85rem; }
   .permanent-icons a, .cv-icon{ font-size: 1.1rem; }
   .tab-btn{ font-size: 12px; padding: 7px 10px; }
+}
+
+
+/* ===== Mobile & Accessibility Enhancements ===== */
+
+/* Fluid type for base body text */
+html { font-size: clamp(14px, 1.4vw + 10px, 18px); }
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  body { animation: none !important; }
+  #bg-video { animation: none !important; }
+}
+
+/* Safe-area insets for iOS notches */
+:root {
+  --safe-top: env(safe-area-inset-top);
+  --safe-right: env(safe-area-inset-right);
+  --safe-bottom: env(safe-area-inset-bottom);
+  --safe-left: env(safe-area-inset-left);
+}
+
+/* Use safe-area padding for fixed panels */
+.profile-info-panel {
+  padding-top: calc(12px + var(--safe-top));
+  padding-bottom: calc(12px + var(--safe-bottom));
+  margin-left: var(--safe-left);
+  margin-right: var(--safe-right);
+}
+
+/* Ensure the sticky tabs never collide with the fixed card on small screens */
+@media (max-width: 600px) {
+  .tabbar { top: calc(8px + var(--safe-top)); }
+  body { padding-bottom: var(--safe-bottom); }
+}
+
+/* Improve link tap area on mobile */
+@media (max-width: 600px) {
+  a, .tab-btn { -webkit-tap-highlight-color: rgba(0,0,0,0.1); }
+}
+
+/* Keep quotes readable against busy video */
+#quote-box .quote {
+  background: rgba(0,0,0,0.25);
+  border-radius: 8px;
+  padding: 6px 8px;
 }
