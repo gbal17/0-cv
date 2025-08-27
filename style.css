@@ -264,3 +264,117 @@ body[data-bg="bg-2"] .tab-btn.active {
   border-color: #fff !important;
   background: rgba(255,255,255,0.12) !important;
 }
+
+
+
+
+/* ===================== */
+/* MOBILE OPTIMIZATIONS  */
+/* Paste this at the END */
+/* ===================== */
+
+/* Tablets & small laptops */
+@media (max-width: 900px) {
+  .container{
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .content{
+    margin-left: 0;
+  }
+
+  /* Make tabs scrollable if they overflow */
+  .tabbar{
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 8px;
+    padding-bottom: 4px;
+  }
+  .tabbar::-webkit-scrollbar{ display:none; }
+
+  /* Bigger tap targets */
+  .tab-btn{
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+
+  /* Slightly tighter section box on mobile */
+  .section-content{
+    padding: 12px;
+  }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+  /* Keep the circle fixed but smaller and tucked to the top-left */
+  .profile-pic-wrapper#profilePicToggle{
+    width: 72px;
+    height: 72px;
+    top: 12px;      /* adjust here if you want */
+    left: 12px;     /* adjust here if you want */
+    border-width: 1px;
+  }
+
+  /* Card fixed under the circle, full width minus margins */
+  .profile-info-panel{
+    top: 92px;                     /* sits just below the circle */
+    left: 12px;
+    right: 12px;                   /* allow it to grow to the right edge */
+    width: auto;                   /* override max-content */
+    max-width: none;
+    padding: 10px 12px;
+    border-radius: 12px;
+  }
+
+  /* Text sizing inside the card */
+  .name{ font-size: 1rem; }
+  .job-title{ font-size: .95rem; }
+  .email1{ font-size: .9rem; }
+
+  /* Icon tap size */
+  .permanent-icons a, .cv-icon{
+    font-size: 1.2rem;     /* slightly larger for touch */
+    margin-right: 10px;
+  }
+
+  /* Content stack: more readable padding */
+  .section-content{
+    padding: 12px;
+  }
+
+  /* Make quotes fit and move off the extreme left */
+  #quote-box{
+    position: fixed;
+    bottom: 14px;
+    left: 12px;
+    right: 12px;
+    top: auto;
+    width: auto;
+    padding: 6px 0;
+  }
+  #quote-box .quote{
+    font-size: .9em;
+    line-height: 1.5;
+  }
+
+  /* Allow the main page to breathe below the fixed card */
+  .content{
+    margin-top: 160px;   /* pushes sections below the fixed card; adjust if needed */
+  }
+}
+
+/* Very small phones */
+@media (max-width: 380px){
+  .profile-info-panel{
+    top: 88px;
+    padding: 8px 10px;
+  }
+  .name{ font-size: .95rem; }
+  .job-title{ font-size: .9rem; }
+  .email1{ font-size: .85rem; }
+  .permanent-icons a, .cv-icon{ font-size: 1.1rem; }
+  .tab-btn{ font-size: 12px; padding: 7px 10px; }
+}
