@@ -120,7 +120,9 @@ body.video2 .profile-pic-wrapper{ border:1px solid #fff !important; }
 .job-title{ font-size:1em; font-weight:normal; margin-top:5px; }
 .email1 a{ color:inherit; text-decoration:none; }
 .email1 a:hover{ text-decoration:underline; }
-
+.email1 {
+  font-size: 0.85rem;   /* or 14px, adjust to taste */
+}
 /* Social / CV icons (blue by default) */
 .permanent-icons a,
 .cv-icon{
@@ -344,8 +346,8 @@ body[data-bg="bg-2"] .tab-btn.active {
   }
 
   /* Text sizing inside the card */
-  .name{ font-size: 1rem; }
-  .job-title{ font-size: .95rem; }
+  .name{ font-size: .8rem; }
+  .job-title{ font-size: .8rem; }
   .email1{ font-size: .9rem; }
 
   /* Icon tap size */
@@ -390,8 +392,8 @@ body[data-bg="bg-2"] .tab-btn.active {
     /* box-shadow: 0 6px 20px rgba(0,0,0); */
     text-align: center;
   }
-  .name{ font-size: .95rem; }
-  .job-title{ font-size: .9rem; }
+  .name{ font-size: .8rem; }
+  .job-title{ font-size: .8rem; }
   .email1{ font-size: .85rem; }
   .permanent-icons a, .cv-icon{ font-size: 1.1rem; }
   .tab-btn{ font-size: 12px; padding: 7px 10px; }
